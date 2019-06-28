@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import ContactCard from '../components/ContactCard';
 import Modal from '../components/Modal';
+import { Context } from '../store/appContext.jsx';
 
 export default class Contacts extends React.Component {
 	constructor(){
@@ -11,7 +12,6 @@ export default class Contacts extends React.Component {
 			showModal: false  
 		};
 	}
-
 	render() {
 	return (
 		<div className="container">
@@ -21,10 +21,16 @@ export default class Contacts extends React.Component {
 				</p>
 				<div id="contacts" className="panel-collapse collapse show" aria-expanded="true">
 					<ul className="list-group pull-down" id="contact-list">
-						<ContactCard onDelete={() => this.setState({ showModal: true})} />
-						<ContactCard />
-						<ContactCard />
-						<ContactCard />
+						<Context.Consumer>
+							{({store, actions})=>{
+								let lista = store.listaContactos;
+								let tarjetas = [];
+								for(let i=0; i<lista.length; i++){
+									tarjetas.push(<ContactCard key = {i} onDelete={() => this.setState({ showModal: true})} datos={lista[i]} />);	
+								}
+								return tarjetas;
+							}}
+						</Context.Consumer>
 					</ul>
 				</div>
 			</div>

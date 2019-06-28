@@ -1,6 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { Context } from "../store/appContext.jsx";
 
 class Modal extends React.Component{
 	constructor(){
@@ -29,7 +30,13 @@ class Modal extends React.Component{
 						</div>
 						<div className="modal-footer">
 							<button type="button" className="btn btn-primary">Oh no!</button>
-							<button type="button" className="btn btn-secondary" data-dismiss="modal">Do it!</button>
+							<Context.Consumer>
+								{({store, actions}) => {
+									return <button type="button" className="btn btn-secondary" data-dismiss="modal" 
+
+									>Do it!</button>;
+								}}
+							</Context.Consumer>
 						</div>
 					</div>
 				</div>
